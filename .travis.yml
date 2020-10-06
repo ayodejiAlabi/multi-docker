@@ -6,7 +6,8 @@ services:
 before_install:
   - docker build -t ayodejialabi/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run ayodejialabi/react-test npm test -- --coverage
+  #- docker run ayodejialabi/react-test npm test -- --coverage
+  - docker run -e CI=true ayodejialabi/react-test npm run test -- --coverage
 # endRegion ... Build development version and run test case
 # startRegion ... If all test case run successfully build production version
 after_success:
