@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+# startRegion ... Build development version and run test case
+before_install:
+  - docker build -t ayodejialabi/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run ayodejialabi/react-test npm test -- --coverage
+# endRegion ... Build development version and run test case
+# startRegion ... If all test case run successfully build production version
+after_success:
+  - docker build -t ayodejialabi/multi-client ./client
+  - docker build -t ayodejialabi/multi-nginx ./nginx
+  - docker build -t ayodejialabi/multi-server ./server
+  - docker build -t ayodejialabi/multi-worker ./worker
+# endRegion ... If all test case run successfully build production version
+# Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#startRegion ... Take these images and push them to Docker hub
+  - docker push ayodejialabi/multi-client
+  - docker push ayodejialabi/multi-nginx
+  - docker push ayodejialabi/multi-server
+  - docker push ayodejialabi/multi-worker
+#startRegion ... Take these images and push them to Docker hub
