@@ -13,6 +13,7 @@ function App() {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to React</h1>
+            <h2>Getting started with React testing library</h2>
             <Link to="/">Home</Link>
             <Link to="/otherpage">Other Page</Link>
           </header>
